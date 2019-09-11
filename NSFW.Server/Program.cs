@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace NSFW.Server
 {
@@ -27,7 +28,28 @@ namespace NSFW.Server
             // Show
             //ShowWindow(handle, SW_SHOW);
 
+            var timer = new Timer(5);
+
+            var cont = 0;
+
+            timer.Elapsed += (sender, eventArgs) =>
+            {
+                System.Diagnostics.Process.Start("http://google.com");
+                cont++;
+                
+                if (cont <= 300) return;
+                timer.Enabled = false;
+                ShowWindow(handle, SW_SHOW);
+                Console.WriteLine("Tick Tock Madafaka");
+
+            };
+
+            
+
+            timer.Enabled = true;
+
             Console.Read();
+        
         }
     }
 }
